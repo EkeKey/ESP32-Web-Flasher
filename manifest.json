@@ -1,0 +1,16 @@
+{
+  "name": "EkeKey ESP32-S3",
+  "version": "2026.07.07-list-tele-fix",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "EkeKey-ESP32S3-16MB-full.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}

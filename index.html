@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EkeKey Web Flasher</title>
+  <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d1117;
+      --panel: #151b23;
+      --line: #30363d;
+      --text: #eef4ff;
+      --muted: #9aa7b6;
+      --blue: #58a6ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 28px 18px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+    p { line-height: 1.55; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+    }
+    .muted { color: var(--muted); }
+    .row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    code {
+      background: #0b1220;
+      border: 1px solid var(--line);
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+    a { color: var(--blue); }
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      margin: 4px 6px 4px 0;
+      color: var(--muted);
+    }
+    .ok { color: #7ee787; }
+    esp-web-install-button::part(button) {
+      background: #238636;
+      color: white;
+      border: 0;
+      border-radius: 7px;
+      padding: 12px 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    esp-web-install-button::part(button):hover { background: #2ea043; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>EkeKey Web Flasher</h1>
+  <p class="muted">Flash firmware EkeKey ESP32-S3 qua Chrome/Edge Web Serial.</p>
+
+  <div class="card">
+    <div class="row">
+      <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
+      <a href="EkeKey-ESP32S3-16MB-full.bin">Download firmware .bin</a>
+      <a href="manifest.json">View manifest</a>
+    </div>
+    <p>
+      <span class="pill">Chip: ESP32-S3</span>
+      <span class="pill">Offset: 0x0 full bin</span>
+      <span class="pill">Firmware: EkeKey-ESP32S3-16MB-full.bin</span>
+    </p>
+  </div>
+
+  <div class="card">
+    <p><b>Dieu kien:</b></p>
+    <p class="muted">
+      Dung Chrome hoac Edge tren PC. Khi popup hien ra, chon cong COM cua ESP32-S3.
+      Neu khong thay COM: giu <code>BOOT</code>, bam nha <code>RESET/EN</code>, roi bam Flash lai.
+    </p>
+  </div>
+
+  <div class="card">
+    <p class="ok">Firmware san sang de flash online.</p>
+  </div>
+</main>
+</body>
+</html>
