@@ -1,4 +1,4 @@
-# EkeKey ESP32-S3 Web Flasher
+# EkeKey ESP32-S3 Web Flasher by https://ekekey.com
 
 Static GitHub Pages flasher for EkeKey ESP32-S3 firmware.
 
