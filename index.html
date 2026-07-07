@@ -3,106 +3,246 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>EkeKey Web Flasher</title>
+  <title>EkeKey ESP32 Flasher</title>
   <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
   <style>
     :root {
       color-scheme: dark;
-      --bg: #0d1117;
-      --panel: #151b23;
-      --line: #30363d;
-      --text: #eef4ff;
-      --muted: #9aa7b6;
-      --blue: #58a6ff;
+      --page: #101010;
+      --panel: #1f1f1f;
+      --field: #2a2a2a;
+      --line: #3b3b3b;
+      --soft-line: #303030;
+      --blue: #078bdc;
+      --blue-strong: #0c8dda;
+      --text: #f5f5f5;
+      --muted: #b8b8b8;
+      --danger-bg: #351f21;
+      --danger-line: #ff4242;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: var(--bg);
+      min-height: 100vh;
+      background: var(--page);
       color: var(--text);
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
     }
     main {
-      max-width: 760px;
+      max-width: 950px;
       margin: 0 auto;
-      padding: 28px 18px;
+      padding: 6px 0 28px;
     }
-    h1 {
-      margin: 0 0 8px;
-      font-size: 30px;
-    }
-    p { line-height: 1.55; }
-    .card {
+    .shell {
+      position: relative;
+      margin: 0 0 12px;
+      padding: 44px 40px 48px;
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 18px;
-      margin: 16px 0;
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
     }
-    .muted { color: var(--muted); }
-    .row {
+    .lang {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      width: 66px;
+      height: 30px;
+      color: #fff;
+      background: var(--field);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 0 8px;
+    }
+    h1 {
+      margin: 0 0 34px;
+      color: var(--blue);
+      font-size: 26px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    .top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 226px;
+      gap: 26px;
+      align-items: end;
+    }
+    label {
+      display: block;
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .field { margin-bottom: 24px; }
+    select {
+      width: 100%;
+      height: 45px;
+      padding: 0 12px;
+      color: #fff;
+      background: var(--field);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      font-size: 16px;
+      outline: none;
+    }
+    select:focus { border-color: var(--blue); }
+    .preview {
       display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 226px;
+      height: 268px;
+      margin-bottom: 24px;
+      border: 1px dashed var(--soft-line);
+      border-radius: 8px;
+      background: #181818;
+    }
+    .preview img {
+      display: block;
+      max-width: 197px;
+      max-height: 232px;
+      border-radius: 8px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.38);
+    }
+    .notice {
+      margin: 2px 0 25px;
+      padding: 17px 18px 15px;
+      border-left: 4px solid var(--danger-line);
+      border-radius: 5px;
+      background: var(--danger-bg);
+      color: #fff;
+      line-height: 1.48;
+    }
+    .notice b { font-weight: 800; }
+    .notice ol {
+      margin: 6px 0 0 18px;
+      padding: 0;
+    }
+    .notice p {
+      margin: 4px 0 0;
+      font-style: italic;
+    }
+    .flash-wrap {
+      display: block;
+      width: 100%;
+    }
+    esp-web-install-button::part(button) {
+      display: block;
+      width: 100%;
+      height: 60px;
+      border: 0;
+      border-radius: 5px;
+      background: var(--blue-strong);
+      color: #fff;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    esp-web-install-button::part(button):hover { background: #0a99ee; }
+    .meta {
+      display: flex;
+      justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
-      align-items: center;
-    }
-    code {
-      background: #0b1220;
-      border: 1px solid var(--line);
-      padding: 2px 6px;
-      border-radius: 5px;
-    }
-    a { color: var(--blue); }
-    .pill {
-      display: inline-block;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 6px 10px;
-      margin: 4px 6px 4px 0;
+      margin-top: 18px;
       color: var(--muted);
+      font-size: 14px;
     }
-    .ok { color: #7ee787; }
-    esp-web-install-button::part(button) {
-      background: #238636;
-      color: white;
-      border: 0;
-      border-radius: 7px;
-      padding: 12px 18px;
-      font-weight: 700;
-      cursor: pointer;
+    .meta a { color: var(--blue); text-decoration: none; }
+    .meta a:hover { text-decoration: underline; }
+    code {
+      background: #161616;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1px 5px;
     }
-    esp-web-install-button::part(button):hover { background: #2ea043; }
+    @media (max-width: 760px) {
+      main { padding: 0; }
+      .shell {
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+        padding: 34px 18px 30px;
+      }
+      .lang { top: 14px; right: 18px; }
+      h1 { font-size: 23px; margin-bottom: 26px; }
+      .top { grid-template-columns: 1fr; }
+      .preview {
+        width: 100%;
+        height: auto;
+        min-height: 210px;
+        margin: -4px 0 22px;
+      }
+      .preview img { max-height: 210px; }
+    }
   </style>
 </head>
 <body>
 <main>
-  <h1>EkeKey Web Flasher</h1>
-  <p class="muted">Flash firmware EkeKey ESP32-S3 qua Chrome/Edge Web Serial.</p>
+  <section class="shell">
+    <select class="lang" aria-label="Language">
+      <option>🇬🇧 EN</option>
+      <option>🇻🇳 VI</option>
+    </select>
 
-  <div class="card">
-    <div class="row">
-      <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
-      <a href="EkeKey-ESP32S3-16MB-full.bin">Download firmware .bin</a>
-      <a href="manifest.json">View manifest</a>
+    <h1>EkeKey ESP32 Flasher</h1>
+
+    <div class="top">
+      <div>
+        <div class="field">
+          <label for="version">Firmware Version:</label>
+          <select id="version">
+            <option>2026.07.07 - List + Telegram Fix (Stable)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="device">1. Choose Device:</label>
+          <select id="device">
+            <option>Dongle</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="board">2. Choose your Board (ESP32-S3):</label>
+          <select id="board">
+            <option>GNPE Pocket Dongle S3 (Display)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="preview">
+        <img src="assets/device-preview.png" alt="ESP32-S3 Pocket Dongle">
+      </div>
     </div>
-    <p>
-      <span class="pill">Chip: ESP32-S3</span>
-      <span class="pill">Offset: 0x0 full bin</span>
-      <span class="pill">Firmware: EkeKey-ESP32S3-16MB-full.bin</span>
-    </p>
-  </div>
 
-  <div class="card">
-    <p><b>Dieu kien:</b></p>
-    <p class="muted">
-      Dung Chrome hoac Edge tren PC. Khi popup hien ra, chon cong COM cua ESP32-S3.
-      Neu khong thay COM: giu <code>BOOT</code>, bam nha <code>RESET/EN</code>, roi bam Flash lai.
-    </p>
-  </div>
+    <div class="notice">
+      <b>⚡ Important Instructions:</b>
+      <ol>
+        <li>Use a good data USB cable.</li>
+        <li>Click Flash and select the port. Choose the COM port to unlock the Connect button.</li>
+        <li>If the port does not appear or the board fails to connect:<br>
+          - Hold <b>BOOT</b>.<br>
+          - Press and release <b>RESET</b> while still holding BOOT.<br>
+          - Release <b>BOOT</b>.
+        </li>
+      </ol>
+      <p>Alternative: unplug USB, hold BOOT, plug USB back in, then release BOOT.</p>
+    </div>
 
-  <div class="card">
-    <p class="ok">Firmware san sang de flash online.</p>
-  </div>
+    <div class="flash-wrap">
+      <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
+    </div>
+
+    <div class="meta">
+      <span>Chip: <code>ESP32-S3</code> · Offset: <code>0x0</code> · Full firmware image</span>
+      <span><a href="EkeKey-ESP32S3-16MB-full.bin">Download .bin</a> · <a href="manifest.json">Manifest</a></span>
+    </div>
+  </section>
 </main>
 </body>
 </html>
