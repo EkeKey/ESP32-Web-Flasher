@@ -1,0 +1,28 @@
+{
+  "name": "EkeKey ESP32-S3 OLED 0.96",
+  "version": "2026.07.09-oled096",
+  "new_install_prompt_erase": false,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "firmware/EkeKey-ESP32S3-0.96-OLED-bootloader.bin",
+          "offset": 0
+        },
+        {
+          "path": "firmware/EkeKey-ESP32S3-0.96-OLED-partition-table.bin",
+          "offset": 32768
+        },
+        {
+          "path": "firmware/EkeKey-ESP32S3-0.96-OLED-ota-data-initial.bin",
+          "offset": 98304
+        },
+        {
+          "path": "firmware/EkeKey-ESP32S3-0.96-OLED-app-ota.bin",
+          "offset": 131072
+        }
+      ]
+    }
+  ]
+}
