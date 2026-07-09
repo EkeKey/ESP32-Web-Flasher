@@ -217,7 +217,7 @@
       </div>
 
       <div class="preview">
-        <img src="assets/device-preview.png" alt="ESP32-S3 Pocket Dongle">
+        <img id="preview-img" src="assets/device-preview.png" alt="ESP32-S3 Pocket Dongle">
       </div>
     </div>
 
@@ -251,12 +251,16 @@
       board: "GNPE Pocket Dongle S3 (Display)",
       manifest: "manifest.json",
       bin: "EkeKey-ESP32S3-16MB-full.bin",
+      image: "assets/device-preview.png",
+      alt: "ESP32-S3 Pocket Dongle",
       meta: "Chip: <code>ESP32-S3</code> - Offset: <code>0x0</code> - Dongle USB full firmware with OTA layout"
     },
     cube154: {
       board: "Xingzhi Cube TFT 1.54 N16R8",
       manifest: "manifest-1.54.json",
       bin: "firmware/EkeKey-ESP32S3-1.54-full.bin",
+      image: "assets/xingzhi-1.54-preview.jpg",
+      alt: "Xingzhi Cube TFT 1.54 ESP32-S3",
       meta: "Chip: <code>ESP32-S3</code> - Offset: <code>0x0</code> - 1.54 TFT full firmware with OTA layout"
     }
   };
@@ -267,6 +271,7 @@
   const binLink = document.getElementById("bin-link");
   const manifestLink = document.getElementById("manifest-link");
   const metaText = document.getElementById("meta-text");
+  const previewImg = document.getElementById("preview-img");
 
   function setDevice() {
     const item = devices[deviceSelect.value] || devices.dongle;
@@ -275,6 +280,8 @@
     binLink.href = item.bin;
     manifestLink.href = item.manifest;
     metaText.innerHTML = item.meta;
+    previewImg.src = item.image;
+    previewImg.alt = item.alt;
   }
 
   deviceSelect.addEventListener("change", setDevice);
