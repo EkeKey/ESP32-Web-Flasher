@@ -1,16 +1,28 @@
-﻿{
-    "name":  "EkeKey ESP32-S3 Xingzhi Cube TFT 1.54",
-    "version":  "2026.07.09-footer-setting-update",
-    "new_install_prompt_erase":  true,
-    "builds":  [
-                   {
-                       "chipFamily":  "ESP32-S3",
-                       "parts":  [
-                                     {
-                                         "path":  "firmware/EkeKey-ESP32S3-1.54-full.bin",
-                                         "offset":  0
-                                     }
-                                 ]
-                   }
-               ]
+{
+  "name": "EkeKey ESP32-S3 Xingzhi Cube TFT 1.54",
+  "version": "2026.07.09-footer-setting-update",
+  "new_install_prompt_erase": false,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "firmware/EkeKey-ESP32S3-1.54-bootloader.bin",
+          "offset": 0
+        },
+        {
+          "path": "firmware/EkeKey-ESP32S3-1.54-partition-table.bin",
+          "offset": 32768
+        },
+        {
+          "path": "firmware/EkeKey-ESP32S3-1.54-ota-data-initial.bin",
+          "offset": 98304
+        },
+        {
+          "path": "firmware/EkeKey-ESP32S3-1.54-app-ota.bin",
+          "offset": 131072
+        }
+      ]
+    }
+  ]
 }

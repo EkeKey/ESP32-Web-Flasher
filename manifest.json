@@ -1,16 +1,28 @@
-﻿{
-    "name":  "EkeKey ESP32-S3",
-    "version":  "2026.07.09-footer-setting-update",
-    "new_install_prompt_erase":  true,
-    "builds":  [
-                   {
-                       "chipFamily":  "ESP32-S3",
-                       "parts":  [
-                                     {
-                                         "path":  "EkeKey-ESP32S3-16MB-full.bin",
-                                         "offset":  0
-                                     }
-                                 ]
-                   }
-               ]
+{
+  "name": "EkeKey ESP32-S3",
+  "version": "2026.07.09-footer-setting-update",
+  "new_install_prompt_erase": false,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "firmware/EkeKey-ESP32S3-bootloader.bin",
+          "offset": 0
+        },
+        {
+          "path": "firmware/EkeKey-ESP32S3-partition-table.bin",
+          "offset": 32768
+        },
+        {
+          "path": "firmware/EkeKey-ESP32S3-ota-data-initial.bin",
+          "offset": 98304
+        },
+        {
+          "path": "firmware/EkeKey-ESP32S3-app-ota.bin",
+          "offset": 131072
+        }
+      ]
+    }
+  ]
 }
