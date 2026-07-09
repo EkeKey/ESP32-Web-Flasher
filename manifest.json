@@ -1,6 +1,6 @@
 {
   "name": "EkeKey ESP32-S3",
-  "version": "2026.07.07-list-tele-fix",
+  "version": "2026.07.09-ota-update",
   "new_install_prompt_erase": true,
   "builds": [
     {

@@ -1,0 +1,9 @@
+{
+    "product":  "EkeKey ESP32-S3",
+    "version":  "1.0.0",
+    "build":  20260709,
+    "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-app-ota.bin",
+    "sha256":  "0e95ba1c5a8fd863bc2afdb4e7737c3fd59fcc7c91ab3e502704a68db01433e2",
+    "size":  1345392,
+    "notes":  "OTA layout, /update web updater, MEM/VIP/PRO passkey quota"
+}
