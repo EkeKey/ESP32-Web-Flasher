@@ -203,14 +203,15 @@
         <div class="field">
           <label for="device">1. Choose Device:</label>
           <select id="device">
-            <option>Dongle</option>
+            <option value="dongle">Dongle USB</option>
+            <option value="cube154">Xingzhi Cube TFT 1.54</option>
           </select>
         </div>
 
         <div class="field">
           <label for="board">2. Choose your Board (ESP32-S3):</label>
           <select id="board">
-            <option>GNPE Pocket Dongle S3 (Display)</option>
+            <option id="board-option">GNPE Pocket Dongle S3 (Display)</option>
           </select>
         </div>
       </div>
@@ -234,15 +235,50 @@
       <p>Alternative: unplug USB, hold BOOT, plug USB back in, then release BOOT.</p>
     </div>
 
-    <div class="flash-wrap">
+    <div class="flash-wrap" id="flash-wrap">
       <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
     </div>
 
     <div class="meta">
-      <span>Chip: <code>ESP32-S3</code> · Offset: <code>0x0</code> · Full firmware image with OTA layout</span>
-      <span><a href="EkeKey-ESP32S3-16MB-full.bin">Download .bin</a> · <a href="manifest.json">Manifest</a></span>
+      <span id="meta-text">Chip: <code>ESP32-S3</code> - Offset: <code>0x0</code> - Full firmware image with OTA layout</span>
+      <span><a id="bin-link" href="EkeKey-ESP32S3-16MB-full.bin">Download .bin</a> - <a id="manifest-link" href="manifest.json">Manifest</a></span>
     </div>
   </section>
 </main>
+<script>
+  const devices = {
+    dongle: {
+      board: "GNPE Pocket Dongle S3 (Display)",
+      manifest: "manifest.json",
+      bin: "EkeKey-ESP32S3-16MB-full.bin",
+      meta: "Chip: <code>ESP32-S3</code> - Offset: <code>0x0</code> - Dongle USB full firmware with OTA layout"
+    },
+    cube154: {
+      board: "Xingzhi Cube TFT 1.54 N16R8",
+      manifest: "manifest-1.54.json",
+      bin: "firmware/EkeKey-ESP32S3-1.54-full.bin",
+      meta: "Chip: <code>ESP32-S3</code> - Offset: <code>0x0</code> - 1.54 TFT full firmware with OTA layout"
+    }
+  };
+
+  const deviceSelect = document.getElementById("device");
+  const boardOption = document.getElementById("board-option");
+  const flashWrap = document.getElementById("flash-wrap");
+  const binLink = document.getElementById("bin-link");
+  const manifestLink = document.getElementById("manifest-link");
+  const metaText = document.getElementById("meta-text");
+
+  function setDevice() {
+    const item = devices[deviceSelect.value] || devices.dongle;
+    boardOption.textContent = item.board;
+    flashWrap.innerHTML = `<esp-web-install-button manifest="${item.manifest}"></esp-web-install-button>`;
+    binLink.href = item.bin;
+    manifestLink.href = item.manifest;
+    metaText.innerHTML = item.meta;
+  }
+
+  deviceSelect.addEventListener("change", setDevice);
+  setDevice();
+</script>
 </body>
 </html>
