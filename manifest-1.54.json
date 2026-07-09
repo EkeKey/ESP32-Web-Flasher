@@ -1,16 +1,16 @@
-{
-  "name": "EkeKey ESP32-S3 Xingzhi Cube TFT 1.54",
-  "version": "2026.07.09-ota-update",
-  "new_install_prompt_erase": true,
-  "builds": [
-    {
-      "chipFamily": "ESP32-S3",
-      "parts": [
-        {
-          "path": "firmware/EkeKey-ESP32S3-1.54-full.bin",
-          "offset": 0
-        }
-      ]
-    }
-  ]
+﻿{
+    "name":  "EkeKey ESP32-S3 Xingzhi Cube TFT 1.54",
+    "version":  "2026.07.09-footer-setting-update",
+    "new_install_prompt_erase":  true,
+    "builds":  [
+                   {
+                       "chipFamily":  "ESP32-S3",
+                       "parts":  [
+                                     {
+                                         "path":  "firmware/EkeKey-ESP32S3-1.54-full.bin",
+                                         "offset":  0
+                                     }
+                                 ]
+                   }
+               ]
 }
