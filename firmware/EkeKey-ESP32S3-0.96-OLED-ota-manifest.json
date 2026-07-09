@@ -1,9 +1,9 @@
 {
     "product":  "EkeKey ESP32-S3 OLED 0.96",
-    "version":  "1.0.1-oled096",
-    "build":  2026070904,
+    "version":  "1.0.2-oled096",
+    "build":  2026070905,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-0.96-OLED-app-ota.bin",
-    "sha256":  "f24df6c5441d458a985ccc6a51eecd12a9aa20834c58244f814dd1833bfd6548",
-    "size":  1316752,
-    "notes":  "OLED 0.96 GPIO41 SDA GPIO42 SCL, startup logo, then AP and Passkeys only"
+    "sha256":  "d041d1489dd01784f7e87331bc0d2fa515be853fdd164135f9d089b2c5c3ee04",
+    "size":  1316864,
+    "notes":  "Fix OTA URL submit, OLED 0.96 GPIO41 SDA GPIO42 SCL"
 }
