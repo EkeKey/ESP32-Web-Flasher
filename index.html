@@ -487,12 +487,43 @@
   let activeTransport = null;
   let activeLoader = null;
   let activeChip = null;
+  let activePort = null;
+  let isConnecting = false;
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 
   function setConnectionUi(connected) {
     connectChip.hidden = connected;
-    connectChip.disabled = connected || !window.EkeKeyEsptool;
+    connectChip.disabled = connected || isConnecting || !window.EkeKeyEsptool;
     disconnectChip.hidden = !connected;
+    disconnectChip.disabled = isConnecting;
     startFlash.hidden = !connected;
+    startFlash.disabled = isConnecting;
+  }
+
+  async function releaseGrantedSerialPorts() {
+    if (!("serial" in navigator) || !navigator.serial.getPorts) return;
+    const ports = await navigator.serial.getPorts();
+    for (const port of ports) {
+      if (port === activePort) continue;
+      try {
+        await port.close();
+        log("Closed a previously granted serial port.");
+      }
+      catch (err) {
+        const text = String(err && (err.message || err));
+        if (!/not open|invalid state/i.test(text)) {
+          log(`Port close warning: ${text}`);
+        }
+      }
+    }
+  }
+
+  function isSerialOpenError(err) {
+    const text = String(err && (err.message || err));
+    return /failed to open|already open|access denied|busy|networkerror|open serial port/i.test(text);
   }
 
   async function connectChipInfo() {
@@ -506,10 +537,19 @@
       return;
     }
 
+    if (isConnecting) return;
+    isConnecting = true;
     connectChip.disabled = true;
     try {
+      if (activeTransport || activePort) {
+        log("Releasing previous serial session...");
+        await disconnectChipInfo(true);
+        await sleep(350);
+      }
+      await releaseGrantedSerialPorts();
       log("Requesting serial port...");
       const port = await navigator.serial.requestPort({});
+      activePort = port;
       activeTransport = new window.EkeKeyEsptool.Transport(port, false);
       const terminal = {
         clean: () => {},
@@ -567,14 +607,24 @@
       setConnectionUi(true);
     }
     catch (err) {
-      log(`Read chip failed: ${err.message || err}`);
+      const message = err.message || err;
+      if (isSerialOpenError(err)) {
+        log("Khong mo duoc COM. Cong dang bi giu boi cua so nap firmware, Serial Monitor, app khac, hoac lan ket noi truoc chua nha xong.");
+        log("Hay bam Disconnect neu dang sang, dong popup ESP Web Tools/Serial Monitor, rut cam lai ESP32 hoac giu BOOT + nha RESET/EN roi bam Connect lai.");
+      }
+      log(`Read chip failed: ${message}`);
       await disconnectChipInfo(true);
+    }
+    finally {
+      isConnecting = false;
+      setConnectionUi(Boolean(activeTransport));
     }
   }
 
   async function disconnectChipInfo(silent) {
     try {
       if (activeTransport) await activeTransport.disconnect();
+      else if (activePort) await activePort.close();
       if (!silent) log("Disconnected");
     }
     catch (err) {
@@ -583,14 +633,16 @@
     activeTransport = null;
     activeLoader = null;
     activeChip = null;
+    activePort = null;
     setConnectionUi(false);
   }
 
   async function triggerStartFlash() {
     setTab("logs");
     log("Start Flash clicked. Releasing serial port before opening ESP Web Tools...");
-    if (activeTransport) {
+    if (activeTransport || activePort) {
       await disconnectChipInfo(true);
+      await sleep(350);
       log("Serial port released for flashing");
     }
     log("Opening ESP Web Tools flasher...");
