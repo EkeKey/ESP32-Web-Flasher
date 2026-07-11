@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>EkeKey ESP32 Flasher</title>
   <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+  <script type="module">
+    import { ESPLoader, Transport } from "https://unpkg.com/esptool-js@0.6.0/lib/index.js";
+    window.EkeKeyEsptool = { ESPLoader, Transport };
+  </script>
   <style>
     :root {
       color-scheme: dark;
@@ -174,6 +178,11 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    .log-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
     .logbox {
       min-height: 170px;
       max-height: 260px;
@@ -326,7 +335,10 @@
       <div class="log-panel">
         <div class="log-head">
           <span>Firmware LOGs</span>
-          <button id="clear-log" type="button">Clear</button>
+          <div class="log-actions">
+            <button id="read-chip" type="button">Read Chip Info</button>
+            <button id="clear-log" type="button">Clear</button>
+          </div>
         </div>
         <pre class="logbox" id="log-output"></pre>
       </div>
@@ -390,6 +402,7 @@
   const firmwareInfo = document.getElementById("firmware-info");
   const logOutput = document.getElementById("log-output");
   const clearLog = document.getElementById("clear-log");
+  const readChip = document.getElementById("read-chip");
   const tabButtons = document.querySelectorAll(".tab-btn");
   const tabPanels = {
     instructions: document.getElementById("instructions-panel"),
@@ -441,6 +454,116 @@
     installer.addEventListener("error", (event) => log(`Installer error: ${event.detail || event.message || "unknown"}`));
   }
 
+  function flashVendorName(id) {
+    const vendors = {
+      0x68: "Boya",
+      0xEF: "Winbond",
+      0xC8: "GigaDevice",
+      0xC2: "Macronix",
+      0x85: "Puya",
+      0x5E: "Zbit",
+      0x20: "XMC"
+    };
+    return vendors[id] || "Unknown";
+  }
+
+  function formatHex(value, width) {
+    return `0x${Number(value >>> 0).toString(16).toUpperCase().padStart(width, "0")}`;
+  }
+
+  function flashSizeFromCapacity(code) {
+    if (code >= 0x10 && code <= 0x20) {
+      const bytes = 1 << code;
+      return bytes >= 1048576 ? `${bytes / 1048576}MB` : `${bytes / 1024}KB`;
+    }
+    return "Unknown";
+  }
+
+  async function readChipInfo() {
+    setTab("logs");
+    if (!("serial" in navigator)) {
+      log("WebSerial is not supported. Use Chrome or Edge on HTTPS.");
+      return;
+    }
+    if (!window.EkeKeyEsptool) {
+      log("esptool-js is still loading. Try again in a second.");
+      return;
+    }
+
+    readChip.disabled = true;
+    let transport;
+    try {
+      log("Requesting serial port...");
+      const port = await navigator.serial.requestPort({});
+      transport = new window.EkeKeyEsptool.Transport(port, false);
+      const terminal = {
+        clean: () => {},
+        writeLine: (data) => String(data || "").split(/\r?\n/).filter(Boolean).forEach(log),
+        write: (data) => {
+          const text = String(data || "").trim();
+          if (text) log(text);
+        }
+      };
+      const loader = new window.EkeKeyEsptool.ESPLoader({
+        transport,
+        baudrate: 115200,
+        terminal,
+        debugLogging: false
+      });
+
+      log("Detecting chip type...");
+      await loader.connect("default_reset", 3, true);
+      const chip = loader.chip;
+      log(chip.CHIP_NAME || "ESP chip detected");
+      if (chip.getChipRevision) {
+        const revision = await chip.getChipRevision(loader);
+        log(`Chip Revision: ${revision}`);
+      }
+      const description = await chip.getChipDescription(loader);
+      log(`Chip is ${description}`);
+      const features = await chip.getChipFeatures(loader);
+      log(`Features: ${features.join(",")}`);
+      log("Crystal is 40MHz");
+      const mac = await chip.readMac(loader);
+      log(`MAC: ${mac}`);
+      log("Uploading stub...");
+      await loader.runStub();
+      log("Stub running...");
+
+      const flashId = await loader.readFlashId();
+      const manufacturerId = flashId & 0xff;
+      const memoryType = (flashId >> 8) & 0xff;
+      const capacityCode = (flashId >> 16) & 0xff;
+      log(`Flash ID: ${flashId.toString(16).padStart(6, "0")}`);
+      log(`Connected to ${chip.CHIP_NAME || "ESP chip"}`);
+      log("Reading flash memory information...");
+      log(`Flash ID: ${formatHex(flashId, 6)}`);
+      log(`Flash Manufacturer ID: ${formatHex(manufacturerId, 2)}`);
+      log(`Flash Memory Type: ${formatHex(memoryType, 2)}`);
+      log(`Flash Capacity Code: ${formatHex(capacityCode, 2)}`);
+      log(`Flash Manufacturer: ${flashVendorName(manufacturerId)}`);
+      try {
+        const flashSize = await loader.detectFlashSize();
+        log(`Detected flash size: ${flashSize}`);
+      }
+      catch (err) {
+        log(`Detected flash size: ${flashSizeFromCapacity(capacityCode)}`);
+      }
+    }
+    catch (err) {
+      log(`Read chip failed: ${err.message || err}`);
+    }
+    finally {
+      try {
+        if (transport) await transport.disconnect();
+      }
+      catch (err) {
+        log(`Disconnect warning: ${err.message || err}`);
+      }
+      readChip.disabled = false;
+    }
+  }
+
   function setDevice() {
     const item = devices[deviceSelect.value] || devices.dongle;
     boardOption.textContent = item.board;
@@ -463,6 +586,7 @@
     logOutput.textContent = "";
     log("Log cleared");
   });
+  readChip.addEventListener("click", readChipInfo);
   deviceSelect.addEventListener("change", setDevice);
   log("EkeKey web flasher ready");
   setDevice();
