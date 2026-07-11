@@ -124,6 +124,81 @@
       margin: 4px 0 0;
       font-style: italic;
     }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin: 2px 0 0;
+      border-bottom: 1px solid var(--soft-line);
+    }
+    .tab-btn {
+      height: 42px;
+      padding: 0 15px;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid transparent;
+      border-bottom: 0;
+      border-radius: 6px 6px 0 0;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      color: #fff;
+      background: #181818;
+      border-color: var(--soft-line);
+    }
+    .tab-panel { margin: 0 0 25px; }
+    .tab-panel.hidden { display: none; }
+    .log-panel {
+      padding: 16px 18px;
+      background: #181818;
+      border: 1px solid var(--soft-line);
+      border-top: 0;
+      border-radius: 0 0 6px 6px;
+    }
+    .log-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .log-head button {
+      height: 32px;
+      padding: 0 12px;
+      color: #fff;
+      background: var(--field);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .logbox {
+      min-height: 170px;
+      max-height: 260px;
+      overflow: auto;
+      margin: 0;
+      padding: 12px;
+      color: #d7f7ff;
+      background: #0b0e11;
+      border: 1px solid #29323a;
+      border-radius: 6px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 13px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+    .firmware-info {
+      margin-top: -10px;
+      padding: 10px 12px;
+      color: #fff;
+      background: #181818;
+      border: 1px solid var(--soft-line);
+      border-radius: 6px;
+      line-height: 1.45;
+    }
+    .firmware-info b { color: var(--blue); }
     .flash-wrap {
       display: block;
       width: 100%;
@@ -196,7 +271,7 @@
         <div class="field">
           <label for="version">Firmware Version:</label>
           <select id="version">
-            <option>2026.07.09 - Footer + Setting Lock + Update Clean (Stable)</option>
+            <option>2026.07.11 - List PIN + Time + OTA (Stable)</option>
           </select>
         </div>
 
@@ -215,6 +290,10 @@
             <option id="board-option">GNPE Pocket Dongle S3 (Display)</option>
           </select>
         </div>
+
+        <div class="firmware-info" id="firmware-info">
+          Firmware: <b>1.0.4</b> - Build: <b>2026071102</b>
+        </div>
       </div>
 
       <div class="preview">
@@ -222,6 +301,12 @@
       </div>
     </div>
 
+    <div class="tabs" role="tablist" aria-label="Flasher panels">
+      <button class="tab-btn active" data-tab="instructions" type="button">&#9889; Important Instructions</button>
+      <button class="tab-btn" data-tab="logs" type="button">LOGs</button>
+    </div>
+
+    <div class="tab-panel" id="instructions-panel">
     <div class="notice">
       <b>⚡ Important Instructions:</b>
       <ol>
@@ -234,6 +319,17 @@
         </li>
       </ol>
       <p>Alternative: unplug USB, hold BOOT, plug USB back in, then release BOOT.</p>
+    </div>
+    </div>
+
+    <div class="tab-panel hidden" id="logs-panel">
+      <div class="log-panel">
+        <div class="log-head">
+          <span>Firmware LOGs</span>
+          <button id="clear-log" type="button">Clear</button>
+        </div>
+        <pre class="logbox" id="log-output"></pre>
+      </div>
     </div>
 
     <div class="flash-wrap" id="flash-wrap">
@@ -251,29 +347,39 @@
     dongle: {
       board: "GNPE Pocket Dongle S3 (Display)",
       manifest: "manifest.json",
+      otaManifest: "firmware/EkeKey-ESP32S3-ota-manifest.json",
       bin: "firmware/EkeKey-ESP32S3-full.bin",
       image: "assets/device-preview.png",
       alt: "ESP32-S3 Pocket Dongle",
+      version: "1.0.4",
+      build: "2026071102",
       meta: "Chip: <code>ESP32-S3</code> - Offset: <code>0x0</code> - Dongle USB full firmware with OTA layout"
     },
     cube154: {
       board: "Xingzhi Cube TFT 1.54 N16R8",
       manifest: "manifest-1.54.json",
+      otaManifest: "firmware/EkeKey-ESP32S3-1.54-ota-manifest.json",
       bin: "firmware/EkeKey-ESP32S3-1.54-full.bin",
       image: "assets/xingzhi-1.54-preview.jpg",
       alt: "Xingzhi Cube TFT 1.54 ESP32-S3",
+      version: "1.0.4-1.54",
+      build: "2026071102",
       meta: "Chip: <code>ESP32-S3</code> - Offset: <code>0x0</code> - 1.54 TFT full firmware with OTA layout"
     },
     oled096: {
       board: "Purple ESP32-S3 OLED 0.96 N16R8",
       manifest: "manifest-0.96.json",
+      otaManifest: "firmware/EkeKey-ESP32S3-0.96-OLED-ota-manifest.json",
       bin: "firmware/EkeKey-ESP32S3-0.96-OLED-full.bin",
       image: "assets/oled-0.96-preview.png",
       alt: "ESP32-S3 OLED 0.96",
+      version: "1.0.4-oled096",
+      build: "2026071102",
       meta: "Chip: <code>ESP32-S3</code> - Offset: <code>0x0</code> - 0.96 OLED full firmware with OTA layout"
     }
   };
 
+  const versionSelect = document.getElementById("version");
   const deviceSelect = document.getElementById("device");
   const boardOption = document.getElementById("board-option");
   const flashWrap = document.getElementById("flash-wrap");
@@ -281,6 +387,59 @@
   const manifestLink = document.getElementById("manifest-link");
   const metaText = document.getElementById("meta-text");
   const previewImg = document.getElementById("preview-img");
+  const firmwareInfo = document.getElementById("firmware-info");
+  const logOutput = document.getElementById("log-output");
+  const clearLog = document.getElementById("clear-log");
+  const tabButtons = document.querySelectorAll(".tab-btn");
+  const tabPanels = {
+    instructions: document.getElementById("instructions-panel"),
+    logs: document.getElementById("logs-panel")
+  };
+
+  function nowText() {
+    return new Date().toLocaleTimeString([], { hour12: false });
+  }
+
+  function log(message) {
+    if (!logOutput) return;
+    logOutput.textContent += `[${nowText()}] ${message}\n`;
+    logOutput.scrollTop = logOutput.scrollHeight;
+  }
+
+  function setTab(name) {
+    tabButtons.forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === name));
+    Object.keys(tabPanels).forEach((key) => tabPanels[key].classList.toggle("hidden", key !== name));
+  }
+
+  function setFirmwareInfo(item, remote) {
+    const version = remote && remote.version ? remote.version : item.version;
+    const build = remote && remote.build ? remote.build : item.build;
+    const size = remote && remote.size ? ` - OTA: <b>${remote.size}</b> bytes` : "";
+    firmwareInfo.innerHTML = `Firmware: <b>${version}</b> - Build: <b>${build}</b>${size}`;
+    versionSelect.innerHTML = `<option>${version} - Build ${build} (Stable)</option>`;
+  }
+
+  async function loadOtaManifest(item) {
+    setFirmwareInfo(item);
+    try {
+      const response = await fetch(`${item.otaManifest}?ts=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const manifest = await response.json();
+      setFirmwareInfo(item, manifest);
+      log(`OTA manifest loaded: ${manifest.version} build ${manifest.build}, ${manifest.size} bytes`);
+    }
+    catch (err) {
+      log(`OTA manifest check failed: ${err.message}`);
+    }
+  }
+
+  function wireInstaller(item) {
+    const installer = flashWrap.querySelector("esp-web-install-button");
+    if (!installer) return;
+    installer.addEventListener("click", () => log(`Flash clicked: ${item.board}`));
+    installer.addEventListener("state-changed", (event) => log(`Installer state: ${JSON.stringify(event.detail || {})}`));
+    installer.addEventListener("error", (event) => log(`Installer error: ${event.detail || event.message || "unknown"}`));
+  }
 
   function setDevice() {
     const item = devices[deviceSelect.value] || devices.dongle;
@@ -291,9 +450,21 @@
     metaText.innerHTML = item.meta;
     previewImg.src = item.image;
     previewImg.alt = item.alt;
+    setFirmwareInfo(item);
+    log(`Device selected: ${item.board}`);
+    log(`Install manifest: ${item.manifest}`);
+    log(`Full bin: ${item.bin}`);
+    wireInstaller(item);
+    loadOtaManifest(item);
   }
 
+  tabButtons.forEach((btn) => btn.addEventListener("click", () => setTab(btn.dataset.tab)));
+  clearLog.addEventListener("click", () => {
+    logOutput.textContent = "";
+    log("Log cleared");
+  });
   deviceSelect.addEventListener("change", setDevice);
+  log("EkeKey web flasher ready");
   setDevice();
 </script>
 </body>
