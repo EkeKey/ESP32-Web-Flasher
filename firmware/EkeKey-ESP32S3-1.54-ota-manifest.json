@@ -1,9 +1,9 @@
-{
+﻿{
     "product":  "EkeKey ESP32-S3 Xingzhi Cube 1.54",
     "version":  "1.0.4-1.54",
-    "build":  2026071102,
+    "build":  2026071107,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-1.54-app-ota.bin",
-    "sha256":  "8593b1795e8ea9f12f1e190d01a1464198f4140bd574aba87d1d0cf468573dd3",
+    "sha256":  "abdf0d8fe362fb8344de9ec5e70701f66d81073800065628db19cdad0ceea774",
     "size":  1347520,
-    "notes":  "Single PIN field in list actions, boot-relative time fallback, PIN-gated backups/imports"
+    "notes":  "OTA HTTP client memory reduction to avoid HTTP init failed"
 }
