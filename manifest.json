@@ -1,6 +1,6 @@
 {
   "name": "EkeKey ESP32-S3",
-  "version": "2026.07.11-pin-gate",
+  "version": "2026.07.11-list-pin-time",
   "new_install_prompt_erase": false,
   "builds": [
     {
