@@ -1,9 +1,9 @@
 {
     "product":  "EkeKey ESP32-S3",
-    "version":  "1.0.1",
-    "build":  2026070902,
+    "version":  "1.0.3",
+    "build":  2026071101,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-app-ota.bin",
-    "sha256":  "cd9bd8a0de6a73ee65015da0f6a2faea97ef876d77087a162781391ced86586a",
-    "size":  1346096,
-    "notes":  "Footer links, FREE setting lock, cleaner update page"
+    "sha256":  "18504455d8307386a399c0ba2a8879a48b2a98b1f9ac60bdf20c20dd6e70e496",
+    "size":  1347248,
+    "notes":  "PIN required for list/setting download and import, FREE download blocked, OTA URL fix"
 }
