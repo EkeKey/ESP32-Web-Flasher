@@ -8,6 +8,7 @@
   <script type="module">
     import { ESPLoader, Transport } from "https://unpkg.com/esptool-js@0.6.0/lib/index.js";
     window.EkeKeyEsptool = { ESPLoader, Transport };
+    window.dispatchEvent(new Event("ekekey-esptool-ready"));
   </script>
   <style>
     :root {
@@ -336,7 +337,9 @@
         <div class="log-head">
           <span>Firmware LOGs</span>
           <div class="log-actions">
-            <button id="read-chip" type="button">Read Chip Info</button>
+            <button id="connect-chip" type="button" disabled>Connect</button>
+            <button id="disconnect-chip" type="button" hidden>Disconnect</button>
+            <button id="start-flash" type="button" hidden>Bat dau Nap</button>
             <button id="clear-log" type="button">Clear</button>
           </div>
         </div>
@@ -402,7 +405,9 @@
   const firmwareInfo = document.getElementById("firmware-info");
   const logOutput = document.getElementById("log-output");
   const clearLog = document.getElementById("clear-log");
-  const readChip = document.getElementById("read-chip");
+  const connectChip = document.getElementById("connect-chip");
+  const disconnectChip = document.getElementById("disconnect-chip");
+  const startFlash = document.getElementById("start-flash");
   const tabButtons = document.querySelectorAll(".tab-btn");
   const tabPanels = {
     instructions: document.getElementById("instructions-panel"),
@@ -479,7 +484,18 @@
     return "Unknown";
   }
 
-  async function readChipInfo() {
+  let activeTransport = null;
+  let activeLoader = null;
+  let activeChip = null;
+
+  function setConnectionUi(connected) {
+    connectChip.hidden = connected;
+    connectChip.disabled = connected || !window.EkeKeyEsptool;
+    disconnectChip.hidden = !connected;
+    startFlash.hidden = !connected;
+  }
+
+  async function connectChipInfo() {
     setTab("logs");
     if (!("serial" in navigator)) {
       log("WebSerial is not supported. Use Chrome or Edge on HTTPS.");
@@ -490,12 +506,11 @@
       return;
     }
 
-    readChip.disabled = true;
-    let transport;
+    connectChip.disabled = true;
     try {
       log("Requesting serial port...");
       const port = await navigator.serial.requestPort({});
-      transport = new window.EkeKeyEsptool.Transport(port, false);
+      activeTransport = new window.EkeKeyEsptool.Transport(port, false);
       const terminal = {
         clean: () => {},
         writeLine: (data) => String(data || "").split(/\r?\n/).filter(Boolean).forEach(log),
@@ -504,38 +519,38 @@
           if (text) log(text);
         }
       };
-      const loader = new window.EkeKeyEsptool.ESPLoader({
-        transport,
+      activeLoader = new window.EkeKeyEsptool.ESPLoader({
+        transport: activeTransport,
         baudrate: 115200,
         terminal,
         debugLogging: false
       });
 
       log("Detecting chip type...");
-      await loader.connect("default_reset", 3, true);
-      const chip = loader.chip;
-      log(chip.CHIP_NAME || "ESP chip detected");
-      if (chip.getChipRevision) {
-        const revision = await chip.getChipRevision(loader);
+      await activeLoader.connect("default_reset", 3, true);
+      activeChip = activeLoader.chip;
+      log(activeChip.CHIP_NAME || "ESP chip detected");
+      if (activeChip.getChipRevision) {
+        const revision = await activeChip.getChipRevision(activeLoader);
         log(`Chip Revision: ${revision}`);
       }
-      const description = await chip.getChipDescription(loader);
+      const description = await activeChip.getChipDescription(activeLoader);
       log(`Chip is ${description}`);
-      const features = await chip.getChipFeatures(loader);
+      const features = await activeChip.getChipFeatures(activeLoader);
       log(`Features: ${features.join(",")}`);
       log("Crystal is 40MHz");
-      const mac = await chip.readMac(loader);
+      const mac = await activeChip.readMac(activeLoader);
       log(`MAC: ${mac}`);
       log("Uploading stub...");
-      await loader.runStub();
+      await activeLoader.runStub();
       log("Stub running...");
 
-      const flashId = await loader.readFlashId();
+      const flashId = await activeLoader.readFlashId();
       const manufacturerId = flashId & 0xff;
       const memoryType = (flashId >> 8) & 0xff;
       const capacityCode = (flashId >> 16) & 0xff;
       log(`Flash ID: ${flashId.toString(16).padStart(6, "0")}`);
-      log(`Connected to ${chip.CHIP_NAME || "ESP chip"}`);
+      log(`Ket noi thanh cong voi ${activeChip.CHIP_NAME || "ESP chip"}`);
       log("Reading flash memory information...");
       log(`Flash ID: ${formatHex(flashId, 6)}`);
       log(`Flash Manufacturer ID: ${formatHex(manufacturerId, 2)}`);
@@ -543,24 +558,52 @@
       log(`Flash Capacity Code: ${formatHex(capacityCode, 2)}`);
       log(`Flash Manufacturer: ${flashVendorName(manufacturerId)}`);
       try {
-        const flashSize = await loader.detectFlashSize();
+        const flashSize = await activeLoader.detectFlashSize();
         log(`Detected flash size: ${flashSize}`);
       }
       catch (err) {
         log(`Detected flash size: ${flashSizeFromCapacity(capacityCode)}`);
       }
+      setConnectionUi(true);
     }
     catch (err) {
       log(`Read chip failed: ${err.message || err}`);
+      await disconnectChipInfo(true);
     }
-    finally {
-      try {
-        if (transport) await transport.disconnect();
-      }
-      catch (err) {
-        log(`Disconnect warning: ${err.message || err}`);
-      }
-      readChip.disabled = false;
+  }
+
+  async function disconnectChipInfo(silent) {
+    try {
+      if (activeTransport) await activeTransport.disconnect();
+      if (!silent) log("Disconnected");
+    }
+    catch (err) {
+      log(`Disconnect warning: ${err.message || err}`);
+    }
+    activeTransport = null;
+    activeLoader = null;
+    activeChip = null;
+    setConnectionUi(false);
+  }
+
+  async function triggerStartFlash() {
+    setTab("logs");
+    log("Start Flash clicked. Releasing serial port before opening ESP Web Tools...");
+    if (activeTransport) {
+      await disconnectChipInfo(true);
+      log("Serial port released for flashing");
+    }
+    log("Opening ESP Web Tools flasher...");
+    const installer = flashWrap.querySelector("esp-web-install-button");
+    const button = installer && installer.shadowRoot && installer.shadowRoot.querySelector("button");
+    if (button) {
+      button.click();
+    }
+    else if (installer) {
+      installer.click();
+    }
+    else {
+      log("Flash button not found.");
     }
   }
 
@@ -586,9 +629,16 @@
     logOutput.textContent = "";
     log("Log cleared");
   });
-  readChip.addEventListener("click", readChipInfo);
+  connectChip.addEventListener("click", connectChipInfo);
+  disconnectChip.addEventListener("click", () => disconnectChipInfo(false));
+  startFlash.addEventListener("click", triggerStartFlash);
+  window.addEventListener("ekekey-esptool-ready", () => {
+    log("esptool-js loaded");
+    setConnectionUi(false);
+  });
   deviceSelect.addEventListener("change", setDevice);
   log("EkeKey web flasher ready");
+  setConnectionUi(false);
   setDevice();
 </script>
 </body>
