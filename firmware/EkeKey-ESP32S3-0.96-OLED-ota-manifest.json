@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3 OLED 0.96",
     "version":  "1.0.4-oled096",
-    "build":  2026071103,
+    "build":  2026071104,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-0.96-OLED-app-ota.bin",
-    "sha256":  "84cef2e939b7bcf2ad2db53bd3251700ce76027430bba658733dd61cc5238e93",
-    "size":  1318016,
-    "notes":  "OLED 0.96 boot logo layout fix"
+    "sha256":  "53725d9ca29e45c3b1bf9b0ac686adddc7acafefb5d57219b96cf4e7bcf1c738",
+    "size":  1318000,
+    "notes":  "OLED 0.96 logo redrawn as large EKEKEY.COM text"
 }
