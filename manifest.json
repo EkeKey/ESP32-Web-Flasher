@@ -1,6 +1,6 @@
 {
   "name": "EkeKey ESP32-S3",
-  "version": "2026.07.11-list-pin-time",
+  "version": "2026.07.12-get-key-free",
   "new_install_prompt_erase": false,
   "builds": [
     {

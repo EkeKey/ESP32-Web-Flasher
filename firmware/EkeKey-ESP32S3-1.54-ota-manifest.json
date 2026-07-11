@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3 Xingzhi Cube 1.54",
     "version":  "1.0.4-1.54",
-    "build":  2026071108,
+    "build":  2026071201,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-1.54-app-ota.bin",
-    "sha256":  "787f783d71dc8da15f45505bcbbf7899abf03fa24209a08aa215c7aa4e75f03d",
-    "size":  1347664,
-    "notes":  "WiFi AP fallback and corrected full-bin OTA data offset"
+    "sha256":  "7e0fbeefc1387725e440fb4a1adedf10a2c55d0cf17466eab9e5b67fd5fc94e4",
+    "size":  1347776,
+    "notes":  "Add Get key Free Telegram link and keep WiFi AP fallback"
 }

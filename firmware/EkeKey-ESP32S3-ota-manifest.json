@@ -1,9 +1,9 @@
-{
+﻿{
     "product":  "EkeKey ESP32-S3",
     "version":  "1.0.4",
-    "build":  2026071102,
+    "build":  2026071201,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-app-ota.bin",
-    "sha256":  "ecd710395ba7ac5a65e15aa2bf50450935718b383ac3e0b5c85dbfe424a81d5b",
-    "size":  1347328,
-    "notes":  "Single PIN field in list actions, boot-relative time fallback, PIN-gated backups/imports"
+    "sha256":  "e46aed4774fc032697795095ed76729e80212d4f5fe6f112eb2032afeee71e95",
+    "size":  1347440,
+    "notes":  "Add Get key Free Telegram link"
 }

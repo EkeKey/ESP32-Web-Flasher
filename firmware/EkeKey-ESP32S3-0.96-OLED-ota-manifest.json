@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3 OLED 0.96",
     "version":  "1.0.4-oled096",
-    "build":  2026071106,
+    "build":  2026071201,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-0.96-OLED-app-ota.bin",
-    "sha256":  "eb28994b377ecbc57d34b95b5ebf3a7949339d812b59b40e8e8366a13a1be53b",
-    "size":  1318000,
-    "notes":  "OLED 0.96 logo centered at y15 with equal text size"
+    "sha256":  "efd7fc8fc5d94e449999892e95f2da7ef39e1be7b0270e627d4bc148afad91ee",
+    "size":  1318112,
+    "notes":  "Add Get key Free Telegram link"
 }
