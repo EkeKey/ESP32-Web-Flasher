@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3",
     "version":  "1.0.4",
-    "build":  2026071206,
+    "build":  2026071207,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-app-ota.bin",
-    "sha256":  "b92874b833f77fb0ea18327e368bca6a9f5384d5d7f4853092be23797baee4c1",
-    "size":  1351504,
-    "notes":  "Use FIDO/passkey PIN for web login and fix passkey list Added/Last used time"
+    "sha256":  "c9d19ddb171df8088d866e1ac969b676f56894f2564b6a59161c891564ae93df",
+    "size":  1351968,
+    "notes":  "Show friendly updating message while OTA is running"
 }
