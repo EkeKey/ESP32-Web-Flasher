@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3 Xingzhi Cube 1.54",
     "version":  "1.0.4-1.54",
-    "build":  2026071202,
+    "build":  2026071203,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-1.54-app-ota.bin",
-    "sha256":  "287647027a85b3f17b183090a970a4d8b2e5746f2a40b5046b36f1f2f85acfa6",
-    "size":  1348368,
-    "notes":  "Mask Telegram bot token in web UI and API"
+    "sha256":  "bd0128c39f1113f98ebc3b4a4ed7e04700fba3667487be8dfa37381486b8c6f0",
+    "size":  1350688,
+    "notes":  "Add Google Drive backup secret page and Gmail-only active email"
 }

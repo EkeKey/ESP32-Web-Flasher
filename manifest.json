@@ -1,6 +1,6 @@
 {
   "name": "EkeKey ESP32-S3",
-  "version": "2026.07.12-mask-tele-token",
+  "version": "2026.07.12-drive-backup",
   "new_install_prompt_erase": false,
   "builds": [
     {

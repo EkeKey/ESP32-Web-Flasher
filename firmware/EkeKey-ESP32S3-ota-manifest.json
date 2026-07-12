@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3",
     "version":  "1.0.4",
-    "build":  2026071202,
+    "build":  2026071203,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-app-ota.bin",
-    "sha256":  "709eb7eff4acfb77bd210a38d95fa2a2c34fdf7ee996a6fd5a7b8bafc0330a75",
-    "size":  1348080,
-    "notes":  "Mask Telegram bot token in web UI and API"
+    "sha256":  "828c0af157efa3b2d0cb0a3fadfb5d83a9a1c879fbca363469783222a7a2729b",
+    "size":  1350400,
+    "notes":  "Add Google Drive backup secret page and Gmail-only active email"
 }
