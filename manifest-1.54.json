@@ -1,6 +1,6 @@
 ﻿{
   "name": "EkeKey ESP32-S3 Xingzhi Cube TFT 1.54",
-  "version": "2026.07.12-update-wait",
+  "version": "2026.07.12-pin-action-fix",
   "new_install_prompt_erase": false,
   "builds": [
     {

@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3 Xingzhi Cube 1.54",
     "version":  "1.0.4-1.54",
-    "build":  2026071207,
+    "build":  2026071208,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-1.54-app-ota.bin",
-    "sha256":  "c1d568578096b260b9105c3483fdde842aa79c73f05d0f0abf6a7e2185d70d39",
-    "size":  1352304,
-    "notes":  "Show friendly updating message while OTA is running"
+    "sha256":  "16ca74fb0a502cf09061c41153afcc7d7e5c7b70ca2d671ba856a7e327c4ce73",
+    "size":  1352240,
+    "notes":  "Use Passkey PIN for list actions and portable import authorization"
 }
