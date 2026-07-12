@@ -1,6 +1,6 @@
 {
   "name": "EkeKey ESP32-S3",
-  "version": "2026.07.12-list-time",
+  "version": "2026.07.12-admin-login",
   "new_install_prompt_erase": false,
   "builds": [
     {

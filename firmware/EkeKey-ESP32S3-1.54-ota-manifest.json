@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3 Xingzhi Cube 1.54",
     "version":  "1.0.4-1.54",
-    "build":  2026071204,
+    "build":  2026071205,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-1.54-app-ota.bin",
-    "sha256":  "e177256bf6a8cf2a7bf7890cff1cd9cfab408a189014825e8bd3870928b7e76e",
-    "size":  1350576,
-    "notes":  "Format passkey list times and refine OLED info screen"
+    "sha256":  "5438a95fa8c332280e604bc5ff0a1bf5db70541a2a472770e6db030b16b7acd7",
+    "size":  1350832,
+    "notes":  "Require Admin PIN for web login session"
 }

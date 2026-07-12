@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3 OLED 0.96",
     "version":  "1.0.4-oled096",
-    "build":  2026071204,
+    "build":  2026071205,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-0.96-OLED-app-ota.bin",
-    "sha256":  "ba93903e97aad546e7239e20f49a1ba472a44deac74961bb141acd8b2a996cc8",
-    "size":  1320960,
-    "notes":  "Format passkey list times and refine OLED info screen"
+    "sha256":  "3208ca7ec6ff727ea7a8786cd2b7c363ef8a07be05c550312296cba9fe72d40c",
+    "size":  1321216,
+    "notes":  "Require Admin PIN for web login session"
 }
