@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3",
     "version":  "1.0.4",
-    "build":  2026071203,
+    "build":  2026071204,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-app-ota.bin",
-    "sha256":  "828c0af157efa3b2d0cb0a3fadfb5d83a9a1c879fbca363469783222a7a2729b",
-    "size":  1350400,
-    "notes":  "Add Google Drive backup secret page and Gmail-only active email"
+    "sha256":  "7edd51bc8e5f932f762f07103c935ca461cbaed83d4121056040b0ece73caa30",
+    "size":  1350256,
+    "notes":  "Format passkey list times and refine OLED info screen"
 }
