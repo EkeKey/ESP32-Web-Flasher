@@ -1,6 +1,6 @@
 {
   "name": "EkeKey ESP32-S3 OLED 0.96",
-  "version": "2026.07.12-get-key-free-oled096",
+  "version": "2026.07.12-mask-tele-token-oled096",
   "new_install_prompt_erase": false,
   "builds": [
     {

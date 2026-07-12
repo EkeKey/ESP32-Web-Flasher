@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3",
     "version":  "1.0.4",
-    "build":  2026071201,
+    "build":  2026071202,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-app-ota.bin",
-    "sha256":  "e46aed4774fc032697795095ed76729e80212d4f5fe6f112eb2032afeee71e95",
-    "size":  1347440,
-    "notes":  "Add Get key Free Telegram link"
+    "sha256":  "709eb7eff4acfb77bd210a38d95fa2a2c34fdf7ee996a6fd5a7b8bafc0330a75",
+    "size":  1348080,
+    "notes":  "Mask Telegram bot token in web UI and API"
 }

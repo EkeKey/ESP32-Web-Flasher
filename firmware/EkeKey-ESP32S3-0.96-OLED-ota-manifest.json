@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3 OLED 0.96",
     "version":  "1.0.4-oled096",
-    "build":  2026071201,
+    "build":  2026071202,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-0.96-OLED-app-ota.bin",
-    "sha256":  "efd7fc8fc5d94e449999892e95f2da7ef39e1be7b0270e627d4bc148afad91ee",
-    "size":  1318112,
-    "notes":  "Add Get key Free Telegram link"
+    "sha256":  "b466cb7b6d59417ec57dd4a83e728f159fe039d6e46ab9b0c78dc900758ae027",
+    "size":  1318784,
+    "notes":  "Mask Telegram bot token in web UI and API"
 }
