@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3",
     "version":  "1.0.4",
-    "build":  2026071205,
+    "build":  2026071206,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-app-ota.bin",
-    "sha256":  "707f7109e1ba81353359f8e4eed9d602ba47fd7e21a8e72aed92e33d8b0f46e5",
-    "size":  1350512,
-    "notes":  "Require Admin PIN for web login session"
+    "sha256":  "b92874b833f77fb0ea18327e368bca6a9f5384d5d7f4853092be23797baee4c1",
+    "size":  1351504,
+    "notes":  "Use FIDO/passkey PIN for web login and fix passkey list Added/Last used time"
 }

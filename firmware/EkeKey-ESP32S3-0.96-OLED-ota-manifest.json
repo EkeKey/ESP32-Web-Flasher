@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3 OLED 0.96",
     "version":  "1.0.4-oled096",
-    "build":  2026071205,
+    "build":  2026071206,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-0.96-OLED-app-ota.bin",
-    "sha256":  "3208ca7ec6ff727ea7a8786cd2b7c363ef8a07be05c550312296cba9fe72d40c",
-    "size":  1321216,
-    "notes":  "Require Admin PIN for web login session"
+    "sha256":  "97de371925646fd31d31ca99a9125b91b14efe8803814f2a8a0f9e6eccea6f2e",
+    "size":  1322160,
+    "notes":  "Use FIDO/passkey PIN for web login and fix passkey list Added/Last used time"
 }

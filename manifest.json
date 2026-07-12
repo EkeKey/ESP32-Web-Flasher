@@ -1,6 +1,6 @@
 {
   "name": "EkeKey ESP32-S3",
-  "version": "2026.07.12-admin-login",
+  "version": "2026.07.12-fido-pin-time",
   "new_install_prompt_erase": false,
   "builds": [
     {
