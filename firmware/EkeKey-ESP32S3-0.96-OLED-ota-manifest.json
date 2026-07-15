@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3 OLED 0.96",
     "version":  "1.0.4-oled096",
-    "build":  2026071208,
+    "build":  2026071209,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-0.96-OLED-app-ota.bin",
-    "sha256":  "bdb23b47569729f164f14a1fa5d01f0dbe0621e974286c61a1f51addb78b9ef1",
-    "size":  1322576,
-    "notes":  "Use Passkey PIN for list actions and portable import authorization"
+    "sha256":  "c9129f3673c4d8c2e07bc1632745ba962e4e666c58108aab014144899eeab174",
+    "size":  1323264,
+    "notes":  "Mask Drive Backup Secret, add Drive test upload, and reorder menu links"
 }

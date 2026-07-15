@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3",
     "version":  "1.0.4",
-    "build":  2026071208,
+    "build":  2026071209,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-app-ota.bin",
-    "sha256":  "4b3d18d1eadbfa17649d3ea39b189533b9bd7d983865cfc54d222d8df49b71c1",
-    "size":  1351920,
-    "notes":  "Use Passkey PIN for list actions and portable import authorization"
+    "sha256":  "b9294200d3de223a03e385a702c682b72daf163d0301eacdc42385d34848ad61",
+    "size":  1352640,
+    "notes":  "Mask Drive Backup Secret, add Drive test upload, and reorder menu links"
 }

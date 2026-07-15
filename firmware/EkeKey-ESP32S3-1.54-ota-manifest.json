@@ -1,9 +1,9 @@
 ﻿{
     "product":  "EkeKey ESP32-S3 Xingzhi Cube 1.54",
     "version":  "1.0.4-1.54",
-    "build":  2026071208,
+    "build":  2026071209,
     "url":  "https://ekekey.github.io/ESP32-Web-Flasher/firmware/EkeKey-ESP32S3-1.54-app-ota.bin",
-    "sha256":  "16ca74fb0a502cf09061c41153afcc7d7e5c7b70ca2d671ba856a7e327c4ce73",
-    "size":  1352240,
-    "notes":  "Use Passkey PIN for list actions and portable import authorization"
+    "sha256":  "a51ffefb67092417dcc312716246aff231e01cab1fd3461794d69775916d0f30",
+    "size":  1352976,
+    "notes":  "Mask Drive Backup Secret, add Drive test upload, and reorder menu links"
 }

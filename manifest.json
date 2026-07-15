@@ -1,6 +1,6 @@
 ﻿{
   "name": "EkeKey ESP32-S3",
-  "version": "2026.07.12-pin-action-fix",
+  "version": "2026.07.15-drive-test",
   "new_install_prompt_erase": false,
   "builds": [
     {

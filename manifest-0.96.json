@@ -1,6 +1,6 @@
 ﻿{
   "name": "EkeKey ESP32-S3 OLED 0.96",
-  "version": "2026.07.12-pin-action-fix-oled096",
+  "version": "2026.07.15-drive-test-oled096",
   "new_install_prompt_erase": false,
   "builds": [
     {
